@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, PersonalInfo, UserType, Role, Branch } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
@@ -68,6 +68,28 @@ exports.delete = async (req, res) => {
     const deleted = await User.destroy({ where: { id: req.params.id } });
     if (!deleted) return res.status(404).json({ error: 'No encontrado' });
     res.json({ message: 'Eliminado' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findByPk(userId, {
+      include: [
+        { model: PersonalInfo },
+        { model: UserType },
+        { model: Role },
+        { model: Branch }
+      ]
+    });
+    
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

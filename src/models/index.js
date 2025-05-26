@@ -15,6 +15,14 @@ const Treatment = require('./treatment')(sequelize, DataTypes);
 
 // Definir asociaciones aquí (se agregarán después de crear los modelos)
 
+// User associations
+User.hasOne(PersonalInfo, { foreignKey: 'user_id' });
+User.belongsTo(UserType, { foreignKey: 'user_type_id' });
+User.belongsTo(Role, { foreignKey: 'role_id' });
+User.belongsTo(Branch, { foreignKey: 'branch_id' });
+
+PersonalInfo.belongsTo(User, { foreignKey: 'user_id' });
+
 // Asociaciones
 UserType.hasMany(User, { foreignKey: 'user_type_id' });
 User.belongsTo(UserType, { foreignKey: 'user_type_id' });
@@ -24,9 +32,6 @@ User.belongsTo(Role, { foreignKey: 'role_id' });
 
 Branch.hasMany(User, { foreignKey: 'branch_id' });
 User.belongsTo(Branch, { foreignKey: 'branch_id' });
-
-User.hasOne(PersonalInfo, { foreignKey: 'user_id', onDelete: 'CASCADE' });
-PersonalInfo.belongsTo(User, { foreignKey: 'user_id' });
 
 User.hasMany(Image, { foreignKey: 'user_id' });
 Image.belongsTo(User, { foreignKey: 'user_id' });
