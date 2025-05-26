@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const { sequelize } = require('./models');
 require('dotenv').config();
@@ -15,6 +16,11 @@ const treatmentRoutes = require('./routes/treatmentRoutes');
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Cambia el puerto si tu frontend usa otro
+  credentials: true
+}));
 
 // Rutas base (se agregarán más luego)
 app.get('/', (req, res) => {
