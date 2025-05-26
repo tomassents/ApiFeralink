@@ -61,6 +61,39 @@ Authorization: Bearer <token>
 }
 ```
 
+#### Obtener usuario actual
+- **GET** `/api/users/me`
+
+**Response:**
+```json
+{
+  "id": 1,
+  "username": "usuario1",
+  "is_active": true,
+  "user_type_id": 1,
+  "branch_id": 1,
+  "role_id": 1,
+  "PersonalInfo": {
+    "first_name": "Juan",
+    "last_name": "Pérez",
+    "email": "juan.perez@mail.com",
+    "phone": "123456789"
+  },
+  "UserType": {
+    "name": "Doctor",
+    "description": "Usuario con permisos de veterinario"
+  },
+  "Role": {
+    "name": "Admin",
+    "description": "Rol con todos los permisos"
+  },
+  "Branch": {
+    "name": "Sucursal Central",
+    "address": "Av. Principal 123"
+  }
+}
+```
+
 #### Obtener todos los usuarios
 - **GET** `/api/users/`
 
